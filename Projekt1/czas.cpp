@@ -1,4 +1,4 @@
-#include "headline.h"
+#include "czas.h"
 
 Czas::Czas() {
     godzina = 0;

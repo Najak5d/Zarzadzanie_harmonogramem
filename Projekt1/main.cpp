@@ -1,4 +1,5 @@
-#include "headline.h"
+#include "czas.h"
+#include "harmonogram.h"
 
 int main() {
     Czas czas1(12, 30, 45);// utworzenie obiektu czasu
