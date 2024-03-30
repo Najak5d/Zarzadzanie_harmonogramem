@@ -85,6 +85,26 @@ Czas& Czas::operator+=(int sekundy) {
     return *this;
 }
 
+Czas& Czas::operator+=(const Czas& czas) {
+    sekunda += czas.sekunda;
+    minuta += czas.minuta;
+    godzina += czas.godzina;
+
+    if (sekunda >= 60) {
+        sekunda -= 60;
+        minuta++;
+    }
+    if (minuta >= 60) {
+        minuta -= 60;
+        godzina++;
+    }
+    if (godzina >= 24) {
+        godzina -= 24;
+    }
+
+    return *this;
+}
+
 bool Czas::operator==(const Czas& czas) const {
     return (godzina == czas.godzina && minuta == czas.minuta && sekunda == czas.sekunda);
 }
