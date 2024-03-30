@@ -50,3 +50,34 @@ void Harmonogram::powiekszTablice() {// prywatna metoda pomocnicza do zwiêkszani
     delete[] czasy;
     czasy = nowa_tablica;
 }
+
+Harmonogram::Harmonogram(const Harmonogram& other) : rozmiar(other.rozmiar), pojemnosc(other.pojemnosc) {
+    czasy = new Czas[pojemnosc];
+    for (int i = 0; i < rozmiar; ++i) {
+        czasy[i] = other.czasy[i];
+    }
+}
+
+// Funkcja do tworzenia kopii zawieraj¹cej tylko pierwsze n czasów
+Harmonogram Harmonogram::kopijNczasow(int n) const {
+    Harmonogram kopija;
+    for (int i = 0; i < n && i < rozmiar; ++i) {
+        kopija.dodajCzas(czasy[i]);
+    }
+    return kopija;
+}
+// Funkcja do tworzenia kopii zawieraj¹cej tylko te czasy, których suma mieœci siê w podanym zakresie
+Harmonogram Harmonogram::kopijCzasyDoZakresu(const Czas& zakres) const {
+    Harmonogram kopija;
+    Czas suma;
+    for (int i = 0; i < rozmiar; ++i) {
+        if ((suma + czasy[i]) < zakres) {
+            kopija.dodajCzas(czasy[i]);
+            suma += czasy[i];
+        }
+        else {
+            break;
+        }
+    }
+    return kopija;
+}
