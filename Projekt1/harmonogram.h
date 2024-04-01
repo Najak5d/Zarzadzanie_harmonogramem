@@ -1,4 +1,4 @@
-#ifndef HARMONOGRAM_H
+#ifndef HARMONOGRAM_H //tak samo jak w czas.h
 #define HARMONOGRAM_H
 
 #include "czas.h"
@@ -8,6 +8,8 @@ private:
     Czas* czasy; // dynamiczna tablica czasów
     int rozmiar; // aktualny rozmiar tablicy
     int pojemnosc; // maksymalna pojemnoœæ tablicy
+
+    void powiekszTablice(); // Prywatna metoda pomocnicza do zwiêkszania rozmiaru tablicy
 
 public:
     Harmonogram(int pojemnosc_poczatkowa = 10); // Konstruktor
@@ -24,8 +26,6 @@ public:
     Harmonogram kopijNczasow(int n) const; // Metoda tworz¹ca kopiê zawieraj¹c¹ tylko pierwsze n czasów
     Harmonogram kopijCzasyDoZakresu(const Czas& zakres) const; // Metoda tworz¹ca kopiê zawieraj¹c¹ tylko czasy, których suma mieœci siê w podanym zakresie
 
-private:
-    void powiekszTablice(); // Prywatna metoda pomocnicza do zwiêkszania rozmiaru tablicy
 };
 
 #endif

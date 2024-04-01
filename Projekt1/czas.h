@@ -1,5 +1,5 @@
-﻿#ifndef CZAS_H
-#define CZAS_H
+﻿#ifndef CZAS_H //jesli czas.h nie zostal jeszcze zdefiniowany (jest to zabezpieczenie naglowka)
+#define CZAS_H //defininijemy czas.h
 
 #include <iostream>
 
@@ -25,12 +25,12 @@ public:
 
     // Operatory
     Czas operator+(const Czas& czas) const; // operator dodawania czasow
-    Czas& operator+=(int sekundy); // operator zwiêkszania czasu o sekundy
+    Czas& operator+=(int sekundy); // operator zwiekszania czasu o sekundy
     Czas& operator+=(const Czas& czas);
     bool operator==(const Czas& czas) const; // operator rownoœci
     bool operator<(const Czas& czas) const; // operator mniejszoœci
 
-    void wyswietlCzas() const;    // metoda do wyœwietlania czasu
+    void wyswietlCzas() const;    // metoda do wyswietlania czasu
 };
 
-#endif
+#endif//konczymy indef
