@@ -82,6 +82,37 @@ Czas& Czas::operator+=(int sekundy) {
     minuta = (minuta + dodane_minuty) % 60;
     sekunda = (sekunda + sekundy) % 60;
 
+    if (sekunda < 0) {
+        sekunda += 60;
+        minuta--;
+    }
+    if (minuta < 0) {
+        minuta += 60;
+        godzina--;
+    }
+    if (godzina < 0) {
+        godzina += 24;
+    }
+
+    // Dodaj minutê, jeœli sekundy s¹ wiêksze lub równe 60
+    if (sekundy >= 60) {
+        dodane_minuty += sekundy / 60;
+    }
+
+    minuta += dodane_minuty; // Dodaj dodatkowe minuty
+
+    // Jeœli minuty przekraczaj¹ 59, zwiêksz godzinê i zaktualizuj minutê
+    if (minuta >= 60) {
+        int dodatkowe_godziny = minuta / 60;
+        godzina += dodatkowe_godziny;
+        minuta %= 60;
+    }
+
+    // Jeœli godziny przekraczaj¹ 23, zaktualizuj godzinê
+    if (godzina >= 24) {
+        godzina %= 24;
+    }
+
     return *this;
 }
 
@@ -101,7 +132,6 @@ Czas& Czas::operator+=(const Czas& czas) {
     if (godzina >= 24) {
         godzina -= 24;
     }
-
     return *this;
 }
 
