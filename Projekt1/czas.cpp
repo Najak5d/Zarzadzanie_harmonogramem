@@ -29,7 +29,7 @@ void Czas::ustawCzas(int h, int m, int s) {
         sekunda = s;
     }
     else {
-        std::cerr << "Niepoprawne wartosci czasu\n";
+        std::cerr << "BLAD, niepoprawne wartosci czasu!!!!!\n";//zabezpieczenie
     }
 }
 
@@ -39,7 +39,7 @@ void Czas::ustawCzas(int m, int s) {
         sekunda = s;
     }
     else {
-        std::cerr << "Niepoprawne wartosci czasu\n";//zabezpieczenie
+        std::cerr << "BLAD, niepoprawne wartosci czasu!!!!!\n";//zabezpieczenie
     }
 }
 
@@ -48,7 +48,7 @@ void Czas::ustawCzas(int s) {
         sekunda = s;
     }
     else {
-        std::cerr << "Niepoprawne wartosci czasu\n";//zabezpieczenie
+        std::cerr << "BLAD, niepoprawne wartosci czasu!!!!!\n";//zabezpieczenie
     }
 }
 
@@ -93,24 +93,20 @@ Czas& Czas::operator+=(int sekundy) {
     if (godzina < 0) {
         godzina += 24;
     }
-
-    // Dodaj minutê, jeœli sekundy s¹ wiêksze lub równe 60
     if (sekundy >= 60) {
-        dodane_minuty += sekundy / 60;
+        dodane_minuty += sekundy / 60;// dodaje minutê jesli sekundy s¹ wieksze lub rowne 60
     }
 
     minuta += dodane_minuty; // Dodaj dodatkowe minuty
 
-    // Jeœli minuty przekraczaj¹ 59, zwiêksz godzinê i zaktualizuj minutê
     if (minuta >= 60) {
         int dodatkowe_godziny = minuta / 60;
-        godzina += dodatkowe_godziny;
+        godzina += dodatkowe_godziny;//je¿li minuty przekraczaj¹ 59, zwieeksz godzinê i zmieniam minute
         minuta %= 60;
     }
 
-    // Jeœli godziny przekraczaj¹ 23, zaktualizuj godzinê
     if (godzina >= 24) {
-        godzina %= 24;
+        godzina %= 24;    //jezli godziny przekraczaj¹ 23, zmieniam godzine
     }
 
     return *this;
@@ -148,6 +144,29 @@ bool Czas::operator<(const Czas& czas) const {
         return true;
     else
         return false;
+}
+
+bool Czas::operator>(const Czas& czas) const {
+    if (godzina < czas.godzina)
+        return true;
+    else if (godzina == czas.godzina && minuta > czas.minuta)
+        return true;
+    else if (godzina == czas.godzina && minuta == czas.minuta && sekunda > czas.sekunda)
+        return true;
+    else
+        return false;
+}
+
+bool Czas::operator<=(const Czas& czas) const {
+    return (*this < czas || *this == czas);
+}
+
+bool Czas::operator>=(const Czas& czas) const {
+    return (*this > czas || *this == czas);
+}
+
+bool Czas::operator!=(const Czas& czas) const {
+    return !(*this == czas);
 }
 
 void Czas::wyswietlCzas() const {

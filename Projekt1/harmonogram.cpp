@@ -8,26 +8,25 @@ Harmonogram::~Harmonogram() {// destruktor
     delete[] czasy;
 }
 
-void Harmonogram::dodajCzas(const Czas& czas) {// metoda dodaj¹ca czas do zestawienia
+void Harmonogram::dodajCzas(const Czas& czas) {// metoda dodajaca czas do zestawienia
     if (rozmiar >= pojemnosc) {
-        // jesli tablica jest pe³na, zwiêksz jej rozmiar
-        powiekszTablice();
+        powiekszTablice();// jesli tablica jest pe³na to zwieksz jej rozmiar
     }
     czasy[rozmiar++] = czas;
 }
 
-int Harmonogram::iloscCzasow() const {// metoda zwracaj¹ca iloœæ czasów w zestawieniu
+int Harmonogram::iloscCzasow() const {
     return rozmiar;
 }
 
-Czas& Harmonogram::operator[](int index) {// metoda zwracaj¹ca referencjê do konkretnego czasu w zestawieniu
-    if (index < 0 || index >= rozmiar) {
-        throw std::out_of_range("Indeks poza zakresem");
+Czas& Harmonogram::operator[](int indeks) {// metoda zwracajaca referencje do konkretnego czasu w zestawieniu
+    if (indeks < 0 || indeks >= rozmiar) {
+        throw std::out_of_range("Indeks poza zakresem");//Jesli indeks jest mniejszy ni¿ zero lub wiêkszy lub równy rozmiarowi zestawienia, zg³aszany jest wyj¹tek std::out_of_range z odpowiednim komunikatem.
     }
-    return czasy[index];
+    return czasy[indeks];
 }
 
-Czas Harmonogram::sumaCzasow() const {// metoda zsumowuj¹ca wszystkie czasy w zestawieniu
+Czas Harmonogram::sumaCzasow() const {// metoda sumujaca wszystkie czasy w zestawieniu
     Czas suma;
     for (int i = 0; i < rozmiar; ++i) {
         suma += czasy[i];
@@ -35,38 +34,51 @@ Czas Harmonogram::sumaCzasow() const {// metoda zsumowuj¹ca wszystkie czasy w ze
     return suma;
 }
 
-void Harmonogram::wypiszZestawienie() const {// Metoda wypisuj¹ca ca³e zestawienie
+void Harmonogram::wypiszZestawienie() const {// metoda wwypisuje nam wszystko
     for (int i = 0; i < rozmiar; ++i) {
         czasy[i].wyswietlCzas();
     }
 }
 
 void Harmonogram::powiekszTablice() {// prywatna metoda pomocnicza do zwiêkszania rozmiaru tablicy
-    pojemnosc *= 2;
+    pojemnosc *= 2;//zwiekszam dwukrotnie
     Czas* nowa_tablica = new Czas[pojemnosc];
     for (int i = 0; i < rozmiar; ++i) {
-        nowa_tablica[i] = czasy[i];
+        nowa_tablica[i] = czasy[i];//kopiuje wszystkie do nowej tablicy
     }
     delete[] czasy;
     czasy = nowa_tablica;
 }
 
-Harmonogram::Harmonogram(const Harmonogram& other) : rozmiar(other.rozmiar), pojemnosc(other.pojemnosc) {
+Harmonogram::Harmonogram(const Harmonogram& kopia) : rozmiar(kopia.rozmiar), pojemnosc(kopia.pojemnosc) {//konstrukotr kopiujacy
     czasy = new Czas[pojemnosc];
     for (int i = 0; i < rozmiar; ++i) {
-        czasy[i] = other.czasy[i];
+        czasy[i] = kopia.czasy[i];
     }
 }
 
-// Funkcja do tworzenia kopii zawieraj¹cej tylko pierwsze n czasów
-Harmonogram Harmonogram::kopijNczasow(int n) const {
+Harmonogram& Harmonogram::operator=(const Harmonogram& kopia) {//operator przypisania
+    if (this == &kopia) // sprawdzenie czy nie jest to samo
+        return *this;
+    delete[] czasy;// usun poprzednie czasy
+
+    rozmiar = kopia.rozmiar;//skopiuj rozmiar
+    pojemnosc = kopia.pojemnosc;//kopiuj pojemnosc
+    czasy = new Czas[pojemnosc];//alokacja nowej talicy i kopia zawartosci
+    for (int i = 0; i < rozmiar; ++i) {
+        czasy[i] = kopia.czasy[i];
+    }
+    return *this; // zwracam referencje
+}
+
+Harmonogram Harmonogram::kopiujNczasow(int n) const {
     Harmonogram kopija;
     for (int i = 0; i < n && i < rozmiar; ++i) {
         kopija.dodajCzas(czasy[i]);
     }
     return kopija;
 }
-// Funkcja do tworzenia kopii zawieraj¹cej tylko te czasy, których suma mieœci siê w podanym zakresie
+
 Harmonogram Harmonogram::kopijCzasyDoZakresu(const Czas& zakres) const {
     Harmonogram kopija;
     Czas suma;

@@ -3,29 +3,28 @@
 #include <iostream>
 
 int main() {
-    // Tworzenie poczatkowych czasow
+    //Tworze poczatkowe  czasy,potem harmonogram i  dodaje do niego czasy
     Czas czas1(12, 30, 45);
     Czas czas2(1, 15, 10);
 
-    // Tworzenie harmonogramu i dodawanie czasow
     Harmonogram harmonogram;
     harmonogram.dodajCzas(czas1);
     harmonogram.dodajCzas(czas2);
 
-    // Menu opcji
     int wybor;
     do {
         std::cout << "\nMenu:\n";
         std::cout << "1. Wyswietl czas 1\n";
         std::cout << "2. Wyswietl czas 2\n";
-        std::cout << "3. Sumuj czasy\n";
-        std::cout << "4. Zwiekasz czas 1 o 10 sekund\n";
+        std::cout << "3. Sumuj wszystkie czasy\n";
+        std::cout << "4. Zwiekasz czas 1 o 5 sekund\n";
         std::cout << "5. Porownaj czasy\n";
         std::cout << "6. Wyswietl zestawienie\n";
         std::cout << "7. Utworz kopie pierwszych n czasow\n";
         std::cout << "8. Utworz kopie czasow, ktorych suma miesci sie w podanym zakresie\n";
-        std::cout << "9. Zwiekasz wybrany czas o okreslona liczbe sekund\n";
-        std::cout << "10. Wyjscie\n";
+        std::cout << "9. Wyswietl ilosc czasow w harmonogramie\n";
+        std::cout << "10. Zwiekasz wybrany czas o okreslona liczbe sekund\n";
+        std::cout << "11. Wyjscie\n";
         std::cout << "Wybierz: ";
         std::cin >> wybor;
 
@@ -37,14 +36,14 @@ int main() {
             czas2.wyswietlCzas();
             break;
         case 3: {
-            Czas suma_czasow = czas1 + czas2;
-            std::cout << "Suma czasow: ";
-            suma_czasow.wyswietlCzas();
+            Czas sumaWszystkichCzasow = harmonogram.sumaCzasow();
+            std::cout << "Suma wszystkich czasow w harmonogramie: ";
+            sumaWszystkichCzasow.wyswietlCzas();
             break;
         }
         case 4:
-            czas1 += 10;
-            std::cout << "Czas 1 po zwiekszeniu o 10 sekund: ";
+            czas1 += 5;
+            std::cout << "Czas 1 po zwiekszeniu o 5 sekund: ";
             czas1.wyswietlCzas();
             break;
         case 5:
@@ -62,13 +61,14 @@ int main() {
             int n;
             std::cout << "Podaj liczbe czasow do skopiowania: ";
             std::cin >> n;
-            Harmonogram kopia = harmonogram.kopijNczasow(n);
+            Harmonogram kopia = harmonogram.kopiujNczasow(n);
+            std::cout << "Skopiowane czasy:\n";
             kopia.wypiszZestawienie();
             break;
         }
         case 8: {
             int h, m, s;
-            std::cout << "Podaj maksymalny zakres sumy w formacie GG MM SS: ";
+            std::cout << "Podaj maksymalny zakres, najpierw godzina, potem minuty, sekundy: ";
             std::cin >> h >> m >> s;
             Czas zakres(h, m, s);
             Harmonogram kopia = harmonogram.kopijCzasyDoZakresu(zakres);
@@ -77,21 +77,25 @@ int main() {
         }
         case 9: {
             int indeks, sekundy;
-            std::cout << "Podaj indeks czasu do zwiekszenia: ";
+            std::cout << "Podaj numer czasu do zwiekszenia: ";
             std::cin >> indeks;
             std::cout << "Podaj liczbe sekund do dodania: ";
             std::cin >> sekundy;
-            harmonogram[indeks] += sekundy;
+            harmonogram[indeks-1] += sekundy;
             harmonogram.wypiszZestawienie();
             break;
         }
-        case 10:
-            std::cout << "Zamykanie...\n";
+        case 10: {
+            std::cout << "Ilosc czasow w harmonogramie: " << harmonogram.iloscCzasow() << std::endl;
+            break;
+        }
+        case 11:
+            std::cout << "Konczcze program\n";
             break;
         default:
             std::cout << "Niepoprawny wybor\n";
         }
-    } while (wybor != 10);
+    } while (wybor != 11);
 
     return 0;
 }
