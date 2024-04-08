@@ -9,7 +9,7 @@ private:
     int minuta;
     int godzina;
 
-    //prywatne akcesory do ustawiania wartosci atrybutow
+    // akcesory do ustawiania wartosci atrybutow
     void ustawCzas(int h, int m, int s);
     void ustawCzas(int m, int s);
     void ustawCzas(int s);

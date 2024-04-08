@@ -24,7 +24,8 @@ int main() {
         std::cout << "8. Utworz kopie czasow, ktorych suma miesci sie w podanym zakresie\n";
         std::cout << "9. Wyswietl ilosc czasow w harmonogramie\n";
         std::cout << "10. Zwiekasz wybrany czas o okreslona liczbe sekund\n";
-        std::cout << "11. Wyjscie\n";
+        std::cout << "11. Wyszukaj czas po indeksie\n";
+        std::cout << "12. Wyjscie\n";
         std::cout << "Wybierz: ";
         std::cin >> wybor;
 
@@ -89,13 +90,21 @@ int main() {
             std::cout << "Ilosc czasow w harmonogramie: " << harmonogram.iloscCzasow() << std::endl;
             break;
         }
-        case 11:
+        case 11: {
+            int szukanie;
+            std::cout << "Podaj numer szukanego czasu w harmonogramie: ";
+            std::cin >> szukanie;
+            std::cout << "Czas o szukanym numerze : ";
+            harmonogram[szukanie-1].wyswietlCzas();
+               break;
+        }
+        case 12:
             std::cout << "Konczcze program\n";
             break;
         default:
             std::cout << "Niepoprawny wybor\n";
         }
-    } while (wybor != 11);
+    } while (wybor != 12);
 
     return 0;
 }
